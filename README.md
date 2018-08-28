@@ -26,6 +26,16 @@ Argument Reference:
   This can be extracted from a file on disk using "${file(var.index_file_path)}"
 
 [^]: (autogen_docs_start)
+
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| credentials | Service account json auth path | string | - | yes |
+| indexes | The contents of a index.yaml file, to apply indexes from | string | - | yes |
+| project | The project id | string | - | yes |
+
 [^]: (autogen_docs_end)
 
 ## Development
