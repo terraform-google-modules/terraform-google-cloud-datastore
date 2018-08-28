@@ -25,7 +25,19 @@ Argument Reference:
 - indexes: The contents of an [index file](https://cloud.google.com/datastore/docs/tools/indexconfig#Datastore_About_index_yaml).
   This can be extracted from a file on disk using "${file(var.index_file_path)}"
 
+[^]: (autogen_docs_start)
+[^]: (autogen_docs_end)
+
 ## Development
+
+### Requirements
+- [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.3.0
+
+### Autogeneration of documentation from .tf files
+Run
+```
+make generate_docs
+```
 
 ### Linting
 The makefile in this project will lint or sometimes just format any shell,
