@@ -54,14 +54,14 @@ make generate_docs
 
 ### Integration test
 #### Terraform integration tests
-The integration tests for this module leverage [kitchen-terraform](test/verify_boilerplate.py) and [kitchen-inspec](https://github.com/inspec/kitchen-inspec).
+The integration tests for this module leverage [kitchen-terraform](https://github.com/newcontext-oss/kitchen-terraform) and [kitchen-inspec](https://github.com/inspec/kitchen-inspec).
 
 The tests will do the following:
 - Perform `bundle install` command
   - Installs `kitchen-terraform` and `kitchen-inspec` gems
 - Perform `kitchen create` command
   - Performs a `terraform init`
-- Perform `kitchen create` command
+- Perform `kitchen converge` command
   - Performs a `terraform apply -auto-approve`
 - Perform `kitchen validate` command
   - Performs inspec tests.
