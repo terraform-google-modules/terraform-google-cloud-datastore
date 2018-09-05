@@ -41,6 +41,9 @@ Argument Reference:
 ## Development
 
 ### Requirements
+- [bundler](https://github.com/bundler/bundler)
+- [gcloud beta](https://cloud.google.com/sdk/install)
+- [jq](https://stedolan.github.io/jq/) 1.5
 - [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.3.0
 
 ### Autogeneration of documentation from .tf files
@@ -48,6 +51,27 @@ Run
 ```
 make generate_docs
 ```
+
+### Integration test
+#### Terraform integration tests
+The integration tests for this module leverage [kitchen-terraform](test/verify_boilerplate.py) and [kitchen-inspec](https://github.com/inspec/kitchen-inspec).
+
+The tests will do the following:
+- Perform `bundle install` command
+  - Installs `kitchen-terraform` and `kitchen-inspec` gems
+- Perform `kitchen create` command
+  - Performs a `terraform init`
+- Perform `kitchen create` command
+  - Performs a `terraform apply -auto-approve`
+- Perform `kitchen validate` command
+  - Performs inspec tests.
+    - Inspec tests shell out to gcloud to validate expected resources in GCP.
+- Permos `kitchen destroy` command
+  - Performs a `terraform destroy -force`
+
+You can use the following command to run the integration test in the root folder
+
+  `make test_integration`
 
 ### Linting
 The makefile in this project will lint or sometimes just format any shell,
