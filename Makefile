@@ -27,7 +27,7 @@ DOCKER_TAG_KITCHEN_TERRAFORM ?= ${BUILD_TERRAFORM_VERSION}_${BUILD_CLOUD_SDK_VER
 CREDENTIAL_PATH ?= ~/sa-key.json
 
 # All is the first target in the file so it will get picked up when you just run 'make' on its own
-all: check_shell check_python check_golang check_terraform check_docker check_base_files test_check_headers check_headers check_trailing_whitespace generate_docs docker_build_terraform docker_build_terraform
+all: check_shell check_python check_golang check_terraform check_docker check_base_files test_check_headers check_headers check_trailing_whitespace generate_docs docker_build_terraform docker_build_kitchen_terraform
 
 # The .PHONY directive tells make that this isn't a real target and so
 # the presence of a file named 'check_shell' won't cause this target to stop
@@ -87,12 +87,20 @@ docker_build_terraform:
 		--build-arg BUILD_PROVIDER_GSUITE_VERSION=${BUILD_PROVIDER_GSUITE_VERSION} \
 		-t ${DOCKER_IMAGE_TERRAFORM}:${DOCKER_TAG_TERRAFORM} .
 
-.PHONY: docker_build_terraform
+.PHONY: docker_build_kitchen_terraform
 docker_build_kitchen_terraform:
-	docker build test/shared/docker/kitchen_terraform \
+	docker build -f build/docker/kitchen_terraform/Dockerfile \
 		--build-arg BUILD_TERRAFORM_IMAGE="${DOCKER_IMAGE_TERRAFORM}:${DOCKER_TAG_TERRAFORM}" \
 		--build-arg BUILD_RUBY_VERSION="${BUILD_RUBY_VERSION}" \
-		-t ${DOCKER_IMAGE_KITCHEN_TERRAFORM}:${DOCKER_TAG_KITCHEN_TERRAFORM}
+		-t ${DOCKER_IMAGE_KITCHEN_TERRAFORM}:${DOCKER_TAG_KITCHEN_TERRAFORM} .
+
+# Run docker
+.PHONY: docker_run
+docker_run:
+	docker run --rm -it \
+		-v $(CURDIR):/cftk/workdir \
+		${DOCKER_IMAGE_KITCHEN_TERRAFORM}:${DOCKER_TAG_KITCHEN_TERRAFORM} \
+		/bin/bash
 
 # Integration tests
 .PHONY: test_integration

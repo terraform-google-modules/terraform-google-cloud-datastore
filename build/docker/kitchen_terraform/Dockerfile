@@ -35,7 +35,6 @@ SHELL ["/bin/bash", "-c"]
 ENV APP_BASE_DIR="/cftk"
 
 COPY --from=cfkt_terraform $APP_BASE_DIR $APP_BASE_DIR
-COPY --from=cfkt_terraform /entrypoint.sh /entrypoint.sh
 
 ENV HOME="$APP_BASE_DIR/home"
 ENV PATH $APP_BASE_DIR/bin:$APP_BASE_DIR/google-cloud-sdk/bin:$PATH
@@ -52,7 +51,7 @@ RUN terraform --version && \
     ruby --version && \
     bundle --version
 
-COPY Gemfile /opt/kitchen/
+COPY ./test/kitchen/Gemfile /opt/kitchen/
 
 RUN cd /opt/kitchen && \
     bundle install
@@ -60,5 +59,3 @@ RUN cd /opt/kitchen && \
 RUN gcloud components install beta --quiet
 
 WORKDIR $APP_BASE_DIR/workdir
-
-ENTRYPOINT ["/entrypoint.sh"]
