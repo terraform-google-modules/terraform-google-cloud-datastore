@@ -41,9 +41,7 @@ Argument Reference:
 ## Development
 
 ### Requirements
-- [bundler](https://github.com/bundler/bundler)
-- [gcloud beta](https://cloud.google.com/sdk/install)
-- [jq](https://stedolan.github.io/jq/) 1.5
+- [docker](https://docs.docker.com/install/)
 - [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.3.0
 
 ### Autogeneration of documentation from .tf files
