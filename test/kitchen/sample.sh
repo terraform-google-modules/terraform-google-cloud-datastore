@@ -21,4 +21,3 @@
 
 ## These values you *MUST* modify to match your environment
 export PROJECT_ID="datastore-test-integration"
-export CREDENTIALS_PATH="$HOME/sa-key.json"

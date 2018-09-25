@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TEMPDIR=$(pwd)/test/integration/tmp
+TEMPDIR=$(pwd)/test/tmp/kitchen
 TESTDIR=${BASH_SOURCE%/*}
 
 # Activate test working directory
