@@ -98,8 +98,4 @@ RUN curl -LO https://github.com/DeviaVir/terraform-provider-gsuite/releases/down
     rm terraform-provider-gsuite_${PROVIDER_GSUITE_VERSION}_linux_amd64.tgz && \
     mv terraform-provider-gsuite_v${PROVIDER_GSUITE_VERSION} $APP_BASE_DIR/home/.terraform.d/plugins/terraform-provider-gsuite
 
-COPY entrypoint.sh /entrypoint.sh
-
 WORKDIR $APP_BASE_DIR/workdir
-
-ENTRYPOINT ["/entrypoint.sh"]

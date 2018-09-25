@@ -80,12 +80,12 @@ generate_docs:
 
 .PHONY: docker_build_terraform
 docker_build_terraform:
-	docker build test/shared/docker/terraform \
+	docker build -f build/docker/terraform/Dockerfile \
 		--build-arg BUILD_TERRAFORM_VERSION=${BUILD_TERRAFORM_VERSION} \
 		--build-arg BUILD_CLOUD_SDK_VERSION=${BUILD_CLOUD_SDK_VERSION} \
 		--build-arg BUILD_PROVIDER_GOOGLE_VERSION=${BUILD_PROVIDER_GOOGLE_VERSION} \
 		--build-arg BUILD_PROVIDER_GSUITE_VERSION=${BUILD_PROVIDER_GSUITE_VERSION} \
-		-t ${DOCKER_IMAGE_TERRAFORM}:${DOCKER_TAG_TERRAFORM}
+		-t ${DOCKER_IMAGE_TERRAFORM}:${DOCKER_TAG_TERRAFORM} .
 
 .PHONY: docker_build_terraform
 docker_build_kitchen_terraform:
