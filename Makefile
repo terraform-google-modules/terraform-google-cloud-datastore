@@ -101,11 +101,3 @@ docker_run:
 		-v $(CURDIR):/cftk/workdir \
 		${DOCKER_IMAGE_KITCHEN_TERRAFORM}:${DOCKER_TAG_KITCHEN_TERRAFORM} \
 		/bin/bash
-
-# Integration tests
-.PHONY: test_integration
-test_integration:
-	docker run --rm -it \
-		-v $(CURDIR):/cftk/workdir \
-		${DOCKER_IMAGE_KITCHEN_TERRAFORM}:${DOCKER_TAG_KITCHEN_TERRAFORM} \
-		./test/kitchen/run.sh
