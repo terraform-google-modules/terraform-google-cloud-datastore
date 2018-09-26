@@ -41,6 +41,7 @@ Argument Reference:
 ## Development
 
 ### Requirements
+- [docker](https://docs.docker.com/install/)
 - [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.3.0
 
 ### Autogeneration of documentation from .tf files
@@ -48,6 +49,34 @@ Run
 ```
 make generate_docs
 ```
+
+### Integration test
+#### Terraform integration tests
+The integration tests for this module leverage [kitchen-terraform](https://github.com/newcontext-oss/kitchen-terraform) and [kitchen-inspec](https://github.com/inspec/kitchen-inspec). For your convenience, a Docker container is included with all dependencies pre-installed. You can load it like this:
+
+```
+make docker_build_terraform
+make docker_build_kitchen_terraform
+make docker_run
+```
+
+To run the integration tests, you first need to set a few environment variables. These are defined in [sample.sh](./test/fixtures/sample.sh).
+
+```
+cp ./test/fixtures/sample.sh ./mine.sh
+vi mine.sh
+```
+
+The tests can then be executed using the following commands:
+
+1. `source mine.sh` to load in your environment variables (or set them directly).
+2. Run `kitchen create` to initialize
+  - This performs a `terraform init` on the [test fixture](./test/fixtures/)
+3. Run `kitchen converge` to create the test infrastructure
+  - This performs a `terraform apply -auto-approve` command
+4. Run `kitchen verify` to execute the tests.
+  - This command executes a series of inspec tests which shell out to gcloud to verify the underlying resources were created correctly.
+5. Run `kitchen destroy` to clean up the test infrastructure.
 
 ### Linting
 The makefile in this project will lint or sometimes just format any shell,

@@ -15,7 +15,7 @@
  */
 
 locals {
-  path_file = "${path.module}/tmp/index.yaml"
+  path_file            = "${path.module}/tmp/index.yaml"
   null_index_path_file = "${path.module}/null_index/index.yaml"
 }
 
