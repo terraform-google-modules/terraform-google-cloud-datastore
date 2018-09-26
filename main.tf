@@ -40,15 +40,15 @@ resource "null_resource" "cloud-datastore-indices" {
   }
 
   provisioner "local-exec" {
-    command = "gcloud datastore cleanup-indexes ${local_file.cloud-datastore-index-file.filename} --project=${var.project}"
+    command = "gcloud datastore indexes cleanup ${local_file.cloud-datastore-index-file.filename} --project=${var.project}"
   }
 
   provisioner "local-exec" {
-    command = "gcloud datastore create-indexes ${local_file.cloud-datastore-index-file.filename} --project=${var.project}"
+    command = "gcloud datastore indexes create ${local_file.cloud-datastore-index-file.filename} --project=${var.project}"
   }
 
   provisioner "local-exec" {
-    command = "gcloud datastore cleanup-indexes ${local.null_index_path_file} --project=${var.project}"
+    command = "gcloud datastore indexes cleanup ${local.null_index_path_file} --project=${var.project}"
     when    = "destroy"
   }
 }
