@@ -106,7 +106,6 @@ docker_run:
 .PHONY: test_integration
 test_integration:
 	docker run --rm -it \
-		-v ${CREDENTIAL_PATH}:/cftk/home/.google_sa_key.json \
 		-v $(CURDIR):/cftk/workdir \
 		${DOCKER_IMAGE_KITCHEN_TERRAFORM}:${DOCKER_TAG_KITCHEN_TERRAFORM} \
 		./test/kitchen/run.sh

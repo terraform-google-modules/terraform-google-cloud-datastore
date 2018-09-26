@@ -16,60 +16,6 @@
 TEMPDIR=$(pwd)/test/tmp/kitchen
 TESTDIR=${BASH_SOURCE%/*}
 
-# Activate test working directory
-function make_testdir() {
-  mkdir -p "$TEMPDIR"
-  cp -r "$TESTDIR"/* "$TEMPDIR"
-  cp -r "$TESTDIR"/.kitchen.yml "$TEMPDIR"
-}
-
-# Activate test config
-function activate_config() {
-  # shellcheck disable=SC1091
-  source config.sh
-  echo "$PROJECT_NAME"
-}
-
-# Cleans the workdir
-function clean_workdir() {
-  #rm -rf "$TEMPDIR"
-
-  export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=""
-  unset CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
-
-}
-
-# Creates the main.tf file for Terraform
-function create_main_tf_file() {
-  echo "Creating main.tf file"
-  touch main.tf
-  cat <<EOF > main.tf
-locals {
-  credentials_file_path    = "$CREDENTIALS_PATH"
-}
-
-provider "google" {
-  credentials              = "\${file(local.credentials_file_path)}"
-}
-
-module "datastore" {
-  source      = "../../../"
-  credentials = "\${local.credentials_file_path}"
-  project     = "$PROJECT_ID"
-  indexes     = "\${file("yaml/index.yaml")}"
-}
-EOF
-}
-
-# Creates the outputs.tf file
-function create_outputs_file() {
-  echo "Creating outputs.tf file"
-  touch outputs.tf
-  cat <<'EOF' > outputs.tf
-
-EOF
-}
-
 # Install gems
 function bundle_install() {
   bundle install

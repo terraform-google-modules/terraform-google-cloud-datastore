@@ -38,7 +38,6 @@ COPY --from=cfkt_terraform $APP_BASE_DIR $APP_BASE_DIR
 
 ENV HOME="$APP_BASE_DIR/home"
 ENV PATH $APP_BASE_DIR/bin:$APP_BASE_DIR/google-cloud-sdk/bin:$PATH
-ENV CREDENTIALS_PATH="$APP_BASE_DIR/home/.google_sa_key.json"
 ENV GOOGLE_APPLICATION_CREDENTIALS="$CREDENTIALS_PATH" \
     CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE="$CREDENTIALS_PATH"
 
@@ -51,7 +50,7 @@ RUN terraform --version && \
     ruby --version && \
     bundle --version
 
-COPY ./test/kitchen/Gemfile /opt/kitchen/
+COPY ./Gemfile /opt/kitchen/
 
 RUN cd /opt/kitchen && \
     bundle install

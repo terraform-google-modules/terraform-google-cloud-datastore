@@ -1,4 +1,3 @@
-#!/bin/bash
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+---
+driver:
+  name: "terraform"
+  root_module_directory: test/fixtures
 
-#################################################################
-#   PLEASE FILL THE VARIABLES WITH VALID VALUES FOR TESTING     #
-#   DO NOT REMOVE ANY OF THE VARIABLES                          #
-#################################################################
+provisioner:
+  name: "terraform"
 
-## These values you *MUST* modify to match your environment
-export PROJECT_ID="datastore-test-integration"
+transport:
+  name: exec
+
+platforms:
+  - name: local
+
+verifier:
+  name: inspec
+
+suites:
+  - name: "default"
