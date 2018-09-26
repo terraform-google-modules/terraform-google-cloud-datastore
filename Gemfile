@@ -15,6 +15,7 @@
 ruby '2.4.2'
 
 source 'https://rubygems.org/' do
-  gem 'kitchen-terraform', '~> 3.3'
+  # TODO: Need to pin the version of kitchen-terraform until https://github.com/newcontext-oss/kitchen-terraform/issues/272 is fixed
+  gem 'kitchen-terraform', :git => 'https://github.com/newcontext-oss/kitchen-terraform.git', :ref => 'e1ed686'
   gem 'kitchen-inspec', :git => 'https://github.com/inspec/kitchen-inspec.git', :ref => '0590f1b'
 end
