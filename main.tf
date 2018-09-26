@@ -36,7 +36,7 @@ resource "null_resource" "gcloud-activate-service-account" {
 
 resource "null_resource" "cloud-datastore-indices" {
   triggers {
-    changes_in_index_file = "${sha1(local_file.cloud-datastore-index-file.filename)}"
+    changes_in_index_file = "${sha1(local_file.cloud-datastore-index-file.content)}"
   }
 
   provisioner "local-exec" {
