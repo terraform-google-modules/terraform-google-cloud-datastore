@@ -1,0 +1,7 @@
+name: cloud-datastore
+title: Google Cloud Datastore
+version: 0.1.0
+inspec_version: '>= 2.2.10'
+depends:
+  - name: inspec-terraform
+    git: https://github.com/lagrange-automation/inspec-terraform
