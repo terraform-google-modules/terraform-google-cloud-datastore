@@ -24,31 +24,17 @@ resource "local_file" "cloud-datastore-index-file" {
   filename = "${local.path_file}"
 }
 
-resource "null_resource" "gcloud-activate-service-account" {
-  triggers {
-    changes_in_index_file = "${sha1(local_file.cloud-datastore-index-file.content)}"
-  }
-
-  provisioner "local-exec" {
-    command = "gcloud auth activate-service-account --key-file=${var.credentials}"
-  }
-}
-
 resource "null_resource" "cloud-datastore-indices" {
   triggers {
     changes_in_index_file = "${sha1(local_file.cloud-datastore-index-file.content)}"
   }
 
   provisioner "local-exec" {
-    command = "gcloud datastore indexes cleanup ${local_file.cloud-datastore-index-file.filename} --project=${var.project}"
+    command = "${path.module}/scripts/create-indexes.sh '${var.credentials}' '${var.project}' '${local_file.cloud-datastore-index-file.filename}'"
   }
 
   provisioner "local-exec" {
-    command = "gcloud datastore indexes create ${local_file.cloud-datastore-index-file.filename} --project=${var.project}"
-  }
-
-  provisioner "local-exec" {
-    command = "gcloud datastore indexes cleanup ${local.null_index_path_file} --project=${var.project}"
+    command = "${path.module}/scripts/destroy-indexes.sh '${var.credentials}' '${var.project}' '${local.null_index_path_file}'"
     when    = "destroy"
   }
 }
