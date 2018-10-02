@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+ENV['CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE'] = ENV['TF_VAR_credentials_file_path']
 project_id = attribute("project_id", default: ENV["TF_VAR_project"])
 
 describe terraform_outputs(dir: File.expand_path("../../../fixtures", File.dirname(__FILE__))) do
