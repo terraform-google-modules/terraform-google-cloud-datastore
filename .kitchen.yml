@@ -20,14 +20,14 @@ driver:
 provisioner:
   name: "terraform"
 
-transport:
-  name: exec
-
 platforms:
   - name: local
 
 verifier:
-  name: inspec
+  name: terraform
+  systems:
+    - name: system
+      backend: local
 
 suites:
   - name: "default"

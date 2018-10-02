@@ -15,11 +15,6 @@
 ENV['CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE'] = ENV['TF_VAR_credentials_file_path']
 project_id = attribute("project_id", default: ENV["TF_VAR_project"])
 
-describe terraform_outputs(dir: File.expand_path("../../../fixtures", File.dirname(__FILE__))) do
-  it { should exist }
-  its('project_id') { should eq project_id }
-end
-
 # Ensure first index is type 'Task'
 describe command("gcloud --project='#{project_id}' datastore indexes list --filter='properties[0].name=done' --format=json --quiet | jq -jce '.[0].kind'") do
   its('exit_status') { should eq 0 }
