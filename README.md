@@ -8,7 +8,7 @@ Currently, it supports **index creation** by shelling out to gcloud.
 
 ```
 module "datastore" {
-  source      = "../"
+  source      = "terraform-google-modules/cloud-datastore/google"
   credentials = "sa-key.json"
   project     = "my-project-id"
   indexes     = "${file("index.yaml")}"
