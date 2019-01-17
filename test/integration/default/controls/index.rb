@@ -12,33 +12,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+ENV['CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE'] = ENV['TF_VAR_credentials_file_path']
 project_id = attribute("project_id", default: ENV["TF_VAR_project"])
 
-describe terraform_outputs(dir: File.expand_path("../../../fixtures", File.dirname(__FILE__))) do
-  it { should exist }
-  its('project_id') { should eq project_id }
-end
-
 # Ensure first index is type 'Task'
-describe command("gcloud --project='#{project_id}' beta datastore indexes list --filter='properties[0].name=done' --format=json --quiet | jq -jce '.[0].kind'") do
+describe command("gcloud --project='#{project_id}' datastore indexes list --filter='properties[0].name=done' --format=json --quiet | jq -jce '.[0].kind'") do
   its('exit_status') { should eq 0 }
+  its('stderr') { should eq '' }
   its('stdout') { should eq 'Task' }
 end
 
 # Ensure first index has expected properties
-describe command("gcloud --project='#{project_id}' beta datastore indexes list --filter='properties[0].name=done' --format=json --quiet | jq -jce '.[0].properties'") do
+describe command("gcloud --project='#{project_id}' datastore indexes list --filter='properties[0].name=done' --format=json --quiet | jq -jce '.[0].properties'") do
   its('exit_status') { should eq 0 }
+  its('stderr') { should eq '' }
   its('stdout') { should eq '[{"direction":"ASCENDING","name":"done"},{"direction":"DESCENDING","name":"priority"}]' }
 end
 
 # Ensure second index is type 'Task'
-describe command("gcloud --project='#{project_id}' beta datastore indexes list --filter='properties[0].name=collaborators' --format=json --quiet | jq -jce '.[0].kind'") do
+describe command("gcloud --project='#{project_id}' datastore indexes list --filter='properties[0].name=collaborators' --format=json --quiet | jq -jce '.[0].kind'") do
   its('exit_status') { should eq 0 }
+  its('stderr') { should eq '' }
   its('stdout') { should eq 'Task' }
 end
 
 # Ensure second index has expected properties
-describe command("gcloud --project='#{project_id}' beta datastore indexes list --filter='properties[0].name=collaborators' --format=json --quiet | jq -jce '.[0].properties'") do
+describe command("gcloud --project='#{project_id}' datastore indexes list --filter='properties[0].name=collaborators' --format=json --quiet | jq -jce '.[0].properties'") do
   its('exit_status') { should eq 0 }
+  its('stderr') { should eq '' }
   its('stdout') { should eq '[{"direction":"ASCENDING","name":"collaborators"},{"direction":"DESCENDING","name":"created"}]' }
 end

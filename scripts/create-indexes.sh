@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,22 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-driver:
-  name: "terraform"
-  root_module_directory: test/fixtures
+set -e
 
-provisioner:
-  name: "terraform"
+if [[ $# -lt 3 ]]; then
+  echo "usage: create-indexes.sh <credentials> <project> <indexes_file>" 1>&2
+  exit 1
+fi
 
-platforms:
-  - name: local
+CREDENTIALS=$1
+PROJECT=$2
+INDEXES_FILE=$3
 
-verifier:
-  name: terraform
-  systems:
-    - name: system
-      backend: local
+export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE="$CREDENTIALS"
 
-suites:
-  - name: "default"
+gcloud datastore indexes cleanup "$INDEXES_FILE" --project="$PROJECT" --quiet
+gcloud datastore indexes create "$INDEXES_FILE" --project="$PROJECT" --quiet
