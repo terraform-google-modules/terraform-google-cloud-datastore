@@ -15,5 +15,6 @@
  */
 
 output "project_id" {
-    value = "${var.project}"
+  value = var.project
 }
+

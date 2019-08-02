@@ -20,13 +20,13 @@ locals {
 }
 
 resource "local_file" "cloud-datastore-index-file" {
-  content  = "${var.indexes}"
-  filename = "${local.path_file}"
+  content  = var.indexes
+  filename = local.path_file
 }
 
 resource "null_resource" "cloud-datastore-indices" {
-  triggers {
-    changes_in_index_file = "${sha1(local_file.cloud-datastore-index-file.content)}"
+  triggers = {
+    changes_in_index_file = sha1(local_file.cloud-datastore-index-file.content)
   }
 
   provisioner "local-exec" {

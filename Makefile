@@ -18,15 +18,14 @@ SHELL := /usr/bin/env bash
 # Docker build config variables
 CREDENTIALS_PATH 			?= /cft/workdir/credentials.json
 DOCKER_ORG 				:= gcr.io/cloud-foundation-cicd
-#DOCKER_TAG_BASE_KITCHEN_TERRAFORM 	?= 0.11.10_216.0.0_1.19.1_0.1.10
-DOCKER_TAG_BASE_KITCHEN_TERRAFORM 	?= 1.0.0
+DOCKER_TAG_BASE_KITCHEN_TERRAFORM 	?= 2.3.0
 DOCKER_REPO_BASE_KITCHEN_TERRAFORM 	:= ${DOCKER_ORG}/cft/kitchen-terraform:${DOCKER_TAG_BASE_KITCHEN_TERRAFORM}
 
 # All is the first target in the file so it will get picked up when you just run 'make' on its own
 all: check generate_docs
 
 .PHONY: check
-check: check_shell check_python check_golang check_terraform check_docker check_base_files test_check_headers check_headers check_trailing_whitespace
+check: check_shell check_python check_golang check_terraform check_base_files test_check_headers check_headers check_trailing_whitespace
 
 # The .PHONY directive tells make that this isn't a real target and so
 # the presence of a file named 'check_shell' won't cause this target to stop
@@ -46,10 +45,6 @@ check_golang:
 .PHONY: check_terraform
 check_terraform:
 	@source test/make.sh && check_terraform
-
-.PHONY: check_docker
-check_docker:
-	@source test/make.sh && docker
 
 .PHONY: check_base_files
 check_base_files:

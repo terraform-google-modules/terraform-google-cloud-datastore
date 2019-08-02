@@ -62,13 +62,6 @@ compat_xargs() {
   xargs "${compat[@]}" "$@"
 }
 
-# This function runs the hadolint linter on
-# every file named 'Dockerfile'
-function docker() {
-  echo "Running hadolint on Dockerfiles"
-  find . -name "Dockerfile" -exec hadolint {} \;
-}
-
 # This function runs 'terraform validate' against all
 # directory paths which contain *.tf files.
 function check_terraform() {

@@ -8,6 +8,12 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-YeY-ZZ
+
+### Changed
+
+- Supported version of Terraform is 0.12. [#12]
+
 ## [0.2.0] - 2019-02-21
 ### CHANGED
 - Converted test coverage to use kitchen-terraform. [#3](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/pull/3)
@@ -25,3 +31,4 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [Unreleased]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/v0.2.0...HEAD
 [0.2.0]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/eba169975e2038f3e721b8a6c5f67c2330998b37...v0.1.0
+[#12]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/pull/12
