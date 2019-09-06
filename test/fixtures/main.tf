@@ -15,16 +15,17 @@
  */
 
 locals {
-  credentials_file_path = "${var.credentials_file_path}"
+  credentials_file_path = var.credentials_file_path
 }
 
 provider "google" {
-  credentials = "${file(local.credentials_file_path)}"
+  credentials = file(local.credentials_file_path)
 }
 
 module "datastore" {
   source      = "../../"
-  credentials = "${local.credentials_file_path}"
-  project     = "${var.project}"
-  indexes     = "${file("${path.module}/yaml/index.yaml")}"
+  credentials = local.credentials_file_path
+  project     = var.project
+  indexes     = file("${path.module}/yaml/index.yaml")
 }
+

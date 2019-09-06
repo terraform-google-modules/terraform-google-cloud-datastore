@@ -36,19 +36,54 @@ function basefiles() {
   test -f README.md || echo "Missing README.md"
 }
 
-# This function runs the hadolint linter on
-# every file named 'Dockerfile'
-function docker() {
-  echo "Running hadolint on Dockerfiles"
-  find . -name "Dockerfile" -exec hadolint {} \;
+# find_files is a helper to exclude .git directories and match only regular
+# files to avoid double-processing symlinks.
+find_files() {
+  local pth="$1"
+  shift
+  find "${pth}" '(' \
+    -path '*/.git' \
+    -o -path '*/.terraform' \
+    -o -path '*/.kitchen' \
+    ')' \
+    -prune -o -type f "$@"
+}
+
+# Compatibility with both GNU and BSD style xargs.
+compat_xargs() {
+  local compat=()
+  # Test if xargs is GNU or BSD style.  GNU xargs will succeed with status 0
+  # when given --no-run-if-empty and no input on STDIN.  BSD xargs will fail and
+  # exit status non-zero If xargs fails, assume it is BSD style and proceed.
+  # stderr is silently redirected to avoid console log spam.
+  if xargs --no-run-if-empty </dev/null 2>/dev/null; then
+    compat=("--no-run-if-empty")
+  fi
+  xargs "${compat[@]}" "$@"
 }
 
 # This function runs 'terraform validate' against all
-# files ending in '.tf'
+# directory paths which contain *.tf files.
 function check_terraform() {
+  local rval=125
+  # fmt is before validate for faster feedback, validate requires terraform
+  # init which takes time.
+  echo "Running terraform fmt"
+  find_files . -name "*.tf" -print0 \
+    | compat_xargs -0 -n1 dirname \
+    | sort -u \
+    | compat_xargs -t -n1 echo #terraform fmt -diff -check=true -write=false
+  rval="$?"
+  if [[ "${rval}" -gt 0 ]]; then
+    echo "Error: terraform fmt failed with exit code ${rval}" >&2
+    echo "Check the output for diffs and correct using terraform fmt <dir>" >&2
+    return "${rval}"
+  fi
   echo "Running terraform validate"
-  #shellcheck disable=SC2156
-  find . -name "*.tf" -exec bash -c 'terraform validate --check-variables=false $(dirname "{}")' \;
+  find_files . -not -path "./test/fixtures/shared/*" -name "*.tf" -print0 \
+    | compat_xargs -0 -n1 dirname \
+    | sort -u \
+    | compat_xargs -t -n1 helpers/terraform_validate
 }
 
 # This function runs 'go fmt' and 'go vet' on every file
@@ -85,12 +120,29 @@ function check_trailing_whitespace() {
   fi
 }
 
+function check_headers() {
+  echo "Checking file headers"
+  # Use the exclusion behavior of find_files
+  find_files . -type f -print0 \
+    | compat_xargs -0 python test/verify_boilerplate.py
+}
+
 function generate_docs() {
   echo "Generating markdown docs with terraform-docs"
-  TMPFILE=$(mktemp)
-  for j in $(for i in $(find . -type f | grep \.tf$) ; do dirname "$i" ; done | sort -u) ; do
-    terraform-docs markdown "$j" > "$TMPFILE"
-    python helpers/combine_docfiles.py "$j"/README.md "$TMPFILE"
-  done
-  rm -f "$TMPFILE"
+  local pth helper_dir rval
+  helper_dir="$(pwd)/helpers"
+  while read -r pth; do
+    if [[ -e "${pth}/README.md" ]]; then
+      (cd "${pth}" || return 3; "${helper_dir}"/terraform_docs .;)
+      rval="$?"
+      if [[ "${rval}" -gt 0 ]]; then
+        echo "Error: terraform_docs in ${pth} exit code: ${rval}" >&2
+        return "${rval}"
+      fi
+    else
+      echo "Skipping ${pth} because README.md does not exist."
+    fi
+  done < <(find_files . -name '*.tf' -print0 \
+    | compat_xargs -0 -n1 dirname \
+    | sort -u)
 }

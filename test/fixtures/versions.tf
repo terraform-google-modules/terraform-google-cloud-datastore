@@ -14,24 +14,6 @@
  * limitations under the License.
  */
 
-locals {
-  credentials_file_path = var.credentials_file_path
+terraform {
+  required_version = ">= 0.12"
 }
-
-/******************************************
-  Provider configuration
- *****************************************/
-provider "google" {
-  credentials = file(local.credentials_file_path)
-}
-
-/******************************************
-  Datastore Module
- *****************************************/
-module "datastore" {
-  source      = "../"
-  credentials = var.credentials_file_path
-  project     = var.project
-  indexes     = file("yaml/index.yaml")
-}
-

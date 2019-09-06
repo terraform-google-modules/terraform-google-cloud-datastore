@@ -15,9 +15,12 @@
  */
 
 variable "credentials_file_path" {
+  type        = string
   description = "Service account json auth path"
 }
 
 variable "project" {
+  type        = string
   description = "The project to run tests against"
 }
+
