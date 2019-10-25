@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-variable "credentials_file_path" {
-  type        = string
-  description = "Service account json auth path"
-}
-
-variable "project" {
+variable "project_id" {
   type        = string
   description = "The project to run tests against"
 }
 
+variable "location_id" {
+  type        = string
+  description = "App Engine Location"
+  default     = "us-east1"
+}

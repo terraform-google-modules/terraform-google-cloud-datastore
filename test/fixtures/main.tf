@@ -14,18 +14,35 @@
  * limitations under the License.
  */
 
-locals {
-  credentials_file_path = var.credentials_file_path
-}
-
 provider "google" {
-  credentials = file(local.credentials_file_path)
+  version = "2.18.0"
 }
 
 module "datastore" {
-  source      = "../../"
-  credentials = local.credentials_file_path
-  project     = var.project
-  indexes     = file("${path.module}/yaml/index.yaml")
+  source  = "../../"
+  project = var.project_id
+  indexes = data.null_data_source.dependency.outputs.indexes
 }
 
+resource "google_app_engine_application" "app" {
+  project     = var.project_id
+  location_id = var.location_id
+}
+
+resource "null_resource" "wait_app" {
+  provisioner "local-exec" {
+    command = "echo sleep 120s for App to get created; sleep 120"
+  }
+  depends_on = [
+    google_app_engine_application.app,
+  ]
+}
+
+data "null_data_source" "dependency" {
+  depends_on = [null_resource.wait_app]
+
+  inputs = {
+    trigger = null_resource.wait_app.id
+    indexes = file("${path.module}/yaml/index.yaml")
+  }
+}

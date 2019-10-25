@@ -1,11 +1,9 @@
-[^]: (autogen_docs_start)
-
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| credentials_file_path | Service account json auth path | string | - | yes |
-| project | The project id | string | - | yes |
+| location\_id | App Engine Location | string | `"us-east1"` | no |
+| project | The project id | string | n/a | yes |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

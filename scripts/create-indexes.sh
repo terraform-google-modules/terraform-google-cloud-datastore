@@ -16,16 +16,20 @@
 
 set -e
 
-if [[ $# -lt 3 ]]; then
-  echo "usage: create-indexes.sh <credentials> <project> <indexes_file>" 1>&2
+# shellcheck disable=SC2034
+if [ -n "${GOOGLE_APPLICATION_CREDENTIALS}" ]; then
+    export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE="${GOOGLE_APPLICATION_CREDENTIALS}"
+fi
+
+env
+
+if [[ $# -lt 2 ]]; then
+  echo "usage: create-indexes.sh <project> <indexes_file>" 1>&2
   exit 1
 fi
 
-CREDENTIALS=$1
-PROJECT=$2
-INDEXES_FILE=$3
-
-export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE="$CREDENTIALS"
+PROJECT=$1
+INDEXES_FILE=$2
 
 gcloud datastore indexes cleanup "$INDEXES_FILE" --project="$PROJECT" --quiet
 gcloud datastore indexes create "$INDEXES_FILE" --project="$PROJECT" --quiet
