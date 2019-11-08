@@ -8,6 +8,11 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+### Removed
+
+- The `credentials` variable. Credentials for the scripts are retrieved from the `GOOGLE_APPLICATION_CREDENTIALS` environment 
+  variable. [#16]
+
 ## [1.0.0] - 2019-09-06
 
 ### Changed
@@ -32,4 +37,5 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [1.0.0]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/v0.2.0...v1.0.0
 [0.2.0]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/eba169975e2038f3e721b8a6c5f67c2330998b37...v0.1.0
+[#16]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/pull/16
 [#12]: https://github.com/terraform-google-modules/terraform-google-cloud-datastore/pull/12
