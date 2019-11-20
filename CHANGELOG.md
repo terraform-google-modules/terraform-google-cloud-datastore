@@ -10,7 +10,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ### Removed
 
-- The `credentials` variable. Credentials for the scripts are retrieved from the `GOOGLE_APPLICATION_CREDENTIALS` environment 
+- The `credentials` variable. Credentials for the scripts are retrieved from the `GOOGLE_APPLICATION_CREDENTIALS` environment
   variable. [#16]
 
 ## [1.0.0] - 2019-09-06
