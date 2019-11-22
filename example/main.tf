@@ -43,6 +43,6 @@ data "null_data_source" "dependency" {
 
   inputs = {
     trigger = null_resource.wait_app.id
-    indexes = file("yaml/index.yaml")
+    indexes = file(var.indexes_file_path)
   }
 }
