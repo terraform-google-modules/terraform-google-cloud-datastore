@@ -19,30 +19,7 @@ provider "google" {
 }
 
 module "datastore" {
-  source  = "../"
-  project = var.project
-  indexes = data.null_data_source.dependency.outputs.indexes
-}
-
-resource "google_app_engine_application" "app" {
-  project     = var.project
-  location_id = var.location_id
-}
-
-resource "null_resource" "wait_app" {
-  provisioner "local-exec" {
-    command = "echo sleep 120s for App to get created; sleep 120"
-  }
-  depends_on = [
-    google_app_engine_application.app,
-  ]
-}
-
-data "null_data_source" "dependency" {
-  depends_on = [null_resource.wait_app]
-
-  inputs = {
-    trigger = null_resource.wait_app.id
-    indexes = file(var.indexes_file_path)
-  }
+  source            = "../../../examples/simple_example"
+  project           = var.project_id
+  indexes_file_path = "${path.module}/yaml/index.yaml"
 }

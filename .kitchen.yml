@@ -30,4 +30,12 @@ verifier:
       backend: local
 
 suites:
-  - name: "default"
+  - name: "simple_example"
+    driver:
+      root_module_directory: test/fixtures/simple_example
+    verifier:
+      systems:
+        - name: simple_example
+          backend: local
+          controls:
+            - gcloud_datastore
