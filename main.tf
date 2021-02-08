@@ -19,6 +19,15 @@ locals {
   null_index_path_file = "${path.module}/null_index/index.yaml"
 }
 
+resource "local_file" "environment_sh" {
+  sensitive_content = <<EOF
+    export DS_NULL_INDEX_PATH_FILE="${local.null_index_path_file}"
+    export DS_PROJECT="${var.project}"
+    export DS_SCRIPT_DESTROY="${local.null_index_path_file}"
+    EOF
+  filename = "${path.module}/bin/environment.sh"
+}
+
 resource "local_file" "cloud-datastore-index-file" {
   content  = var.indexes
   filename = local.path_file
@@ -33,8 +42,8 @@ resource "null_resource" "cloud-datastore-indices" {
     command = "${path.module}/scripts/create-indexes.sh '${var.project}' '${local_file.cloud-datastore-index-file.filename}'"
   }
 
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/destroy-indexes.sh '${var.project}' '${local.null_index_path_file}'"
+ provisioner "local-exec" {
+    command = "source ./bin/environment.sh && ./scripts/destroy-indexes.sh $DS_PROJECT $DS_NULL_INDEX_PATH_FILE"
     when    = "destroy"
   }
 }
