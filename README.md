@@ -5,9 +5,10 @@ This modules helps you to manage [Google Cloud Datastore](https://cloud.google.c
 Currently, it supports **index creation** by shelling out to gcloud.
 
 ## Compatibility
-
-This module is meant for use with Terraform 0.12. If you haven't [upgraded](https://www.terraform.io/upgrade-guides/0-12.html) and need a Terraform 0.11.x-compatible version of this module, the last released version intended for Terraform 0.11.x
-is [0.2.0](https://registry.terraform.io/modules/terraform-google-modules/cloud-datastore/google/0.2.0).
+This module is meant for use with Terraform 0.13. If you haven't
+[upgraded](https://www.terraform.io/upgrade-guides/0-13.html) and need a Terraform
+0.12.x-compatible version of this module, the last released version
+intended for Terraform 0.12.x is [v1.0.0](https://registry.terraform.io/modules/terraform-google-modules/-cloud-datastore/google/v1.0.0).
 
 ## Usage
 
@@ -34,8 +35,12 @@ Argument Reference:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| indexes | The contents of a index.yaml file, to apply indexes from | string | n/a | yes |
-| project | The project id | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| indexes | The contents of a index.yaml file, to apply indexes from | `string` | n/a | yes |
+| project | The project id | `string` | n/a | yes |
+
+## Outputs
+
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
