@@ -15,13 +15,14 @@
  */
 
 provider "google" {
-  version = "2.18.0"
+  version = "~> 3.53"
 }
 
 module "datastore" {
-  source  = "../../"
-  project = var.project
-  indexes = data.null_data_source.dependency.outputs.indexes
+  source     = "../../"
+  project    = var.project
+  indexes    = file(var.indexes_file_path)
+  depends_on = [time_sleep.wait_120_seconds]
 }
 
 resource "google_app_engine_application" "app" {
@@ -29,20 +30,8 @@ resource "google_app_engine_application" "app" {
   location_id = var.location_id
 }
 
-resource "null_resource" "wait_app" {
-  provisioner "local-exec" {
-    command = "echo sleep 120s for App to get created; sleep 120"
-  }
-  depends_on = [
-    google_app_engine_application.app,
-  ]
-}
-
-data "null_data_source" "dependency" {
-  depends_on = [null_resource.wait_app]
-
-  inputs = {
-    trigger = null_resource.wait_app.id
-    indexes = file(var.indexes_file_path)
-  }
+resource "time_sleep" "wait_120_seconds" {
+  # sleep 120s for App to get created
+  depends_on      = [google_app_engine_application.app]
+  create_duration = "120s"
 }
