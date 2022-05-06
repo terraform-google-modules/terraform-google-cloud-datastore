@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [2.0.0](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/v1.0.0...v2.0.0) (2022-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* add Terraform 0.13 constraint and module attribution (#25)
+
+### Features
+
+* add Terraform 0.13 constraint and module attribution ([#25](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/issues/25)) ([6dc3662](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/commit/6dc3662146995c1d60066138665c8bd1ae9d022b))
+* update TPG version constraints to allow 4.0 ([#27](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/issues/27)) ([4412468](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/commit/441246861e1e67e6f4d2206b53c178a369a272d3))
+
 ## [Unreleased]
 
 ### Removed
