@@ -15,7 +15,6 @@ intended for Terraform 0.12.x is [v1.0.0](https://registry.terraform.io/modules/
 ```
 module "datastore" {
   source      = "terraform-google-modules/cloud-datastore/google"
-  credentials = "sa-key.json"
   project     = "my-project-id"
   indexes     = "${file("index.yaml")}"
 }
@@ -26,7 +25,6 @@ module "datastore" {
 Argument Reference:
 
 - source: Path to the module's folder
-- credentials: File path of a service account with access to managing Datastore.
 - project: The project id to manage datastore indexes for.
 - indexes: The contents of an [index file](https://cloud.google.com/datastore/docs/tools/indexconfig#Datastore_About_index_yaml).
   This can be extracted from a file on disk using "${file(var.index_file_path)}"
