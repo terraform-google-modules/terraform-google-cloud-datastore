@@ -15,7 +15,9 @@
  */
 
 module "datastore" {
-  source     = "../../"
+  source  = "terraform-google-modules/cloud-datastore/google"
+  version = "~> 2.0"
+
   project    = var.project
   indexes    = file(var.indexes_file_path)
   depends_on = [time_sleep.wait_120_seconds]
