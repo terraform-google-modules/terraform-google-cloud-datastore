@@ -16,7 +16,7 @@
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 14.4"
+  version = "~> 15.0"
 
   name              = "ci-cloud-datastore"
   random_project_id = true
