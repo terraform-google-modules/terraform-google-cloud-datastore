@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [2.1.0](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/v2.0.1...v2.1.0) (2025-12-11)
+
+
+### Features
+
+* **deps:** Update Terraform Google Provider to v6 (major) ([#54](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/issues/54)) ([28705fb](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/commit/28705fb24c62ef5f65e4aa487f5a02c3062be85a))
+
 ## [2.0.1](https://github.com/terraform-google-modules/terraform-google-cloud-datastore/compare/v2.0.0...v2.0.1) (2024-01-03)
 
 
